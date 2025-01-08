@@ -54,4 +54,3 @@ jobs:
           docker buildx imagetools create -t dvdlevanon/go-multi-arch-build:latest \
             dvdlevanon/go-multi-arch-build:amd64 \
             dvdlevanon/go-multi-arch-build:arm64
-          docker manifest push dvdlevanon/go-multi-arch-build:latest
