@@ -32,7 +32,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: ${{ matrix.platform }}
+          # platforms: ${{ matrix.platform }}
           push: true
           tags: dvdlevanon/go-multi-arch-build:${{ matrix.platform == 'linux/amd64' && 'amd64' || 'arm64' }}
           cache-from: type=gha
@@ -48,18 +48,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Create and push manifest images
-        uses: Noelware/docker-manifest-action@master
+      - name: Create and push manifest
+        uses: docker/build-push-action@v6
         with:
-          inputs: dvdlevanon/go-multi-arch-build:latest
-          images: dvdlevanon/go-multi-arch-build:amd64,dvdlevanon/go-multi-arch-build:arm64
           push: true
-
-      # - name: Create and push manifest
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     push: true
-      #     tags: dvdlevanon/go-multi-arch-build:latest
-      #     inputs: |
-      #       name=dvdlevanon/go-multi-arch-build:amd64,variant=amd64
-      #       name=dvdlevanon/go-multi-arch-build:arm64,variant=arm64
+          tags: dvdlevanon/go-multi-arch-build:latest
+          inputs: |
+            name=dvdlevanon/go-multi-arch-build:amd64,variant=amd64
+            name=dvdlevanon/go-multi-arch-build:arm64,variant=arm64
