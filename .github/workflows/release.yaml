@@ -47,11 +47,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          
+      
       - name: Create and push manifest
-        run: |
-          docker buildx create --use
-          docker manifest create dvdlevanon/go-multi-arch-build:latest \
-            dvdlevanon/go-multi-arch-build:amd64 \
-            dvdlevanon/go-multi-arch-build:arm64
-          docker manifest push dvdlevanon/go-multi-arch-build:latest
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: dvdlevanon/go-multi-arch-build:latest
+          inputs: |
+            name=dvdlevanon/go-multi-arch-build:amd64,variant=amd64
+            name=dvdlevanon/go-multi-arch-build:arm64,variant=arm64
